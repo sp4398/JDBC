@@ -9,23 +9,19 @@ public class Main {
         String url = "jdbc:mysql://localhost:3306/company";
         String username = "root";
         String password = "root";
+        String query = "Update employee set salary=50000 where id=2";
 
         try{
             Connection con = DriverManager.getConnection(url, username, password);
             System.out.println("Connection established successfully");
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from employee");
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String name = rs.getString("name");
-                String salary = rs.getString("salary");
-                System.out.println();
-                System.out.println("ID: "+id);
-                System.out.println("Name: "+name);
-                System.out.println("Salary: "+salary);
-                System.out.println();
+            int rowsAffected = stmt.executeUpdate(query);
+            if(rowsAffected > 0){
+            System.out.println(rowsAffected+" rows affected.");
+            }else{
+                System.err.println("Failed.");
             }
-            rs.close();
+
             stmt.close();
             con.close();
 
